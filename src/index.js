@@ -27,10 +27,11 @@ if (pushToBranch == true && !githubToken) return exit('A GitHub secret token is 
         core.info('Installing tsc');
         await exec('npm i --g typescript');
 
-        core.info('Installing dependencies (if package-lock.json is present)');
-        // We use the catch here because not everyone will have a package-lock.json
-        await exec(`npm ci`, [], { cwd: directory }).catch(_err => { });
+        core.info('Installing dependencies');
 
+        await exec(`npm install`, [], { cwd: directory }).catch(_err => { });
+        await exec(`npm update`, [], { cwd: directory }).catch(_err => { }); //for types
+        
         // Build project
         console.info('Building project')
         const build = await exec(`npm run ghbuild`, [], { cwd: directory });
