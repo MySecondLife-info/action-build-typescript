@@ -33,7 +33,7 @@ if (pushToBranch == true && !githubToken) return exit('A GitHub secret token is 
 
         // Build project
         console.info('Building project')
-        const build = await exec(`tsc`, [], { cwd: directory });
+        const build = await exec(`npm run ghbuild`, [], { cwd: directory });
         if (build !== 0) return exit('Something went wrong while building.');
         if (pushToBranch == 'false') return process.exit(0);
 
